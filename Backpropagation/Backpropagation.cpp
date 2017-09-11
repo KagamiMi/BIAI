@@ -37,7 +37,7 @@ int main()
 	neurons.setTestData(data.getTestData());
 	//neurons.setTrainData(train);
 	//neurons.setTestData(test);
-	neurons.trainNetwork(100,1);
+	neurons.trainNetwork(1000,10);
 	return 0;
 }
 

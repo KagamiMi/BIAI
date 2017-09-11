@@ -11,6 +11,7 @@ private:
 	std::ifstream file;
 	std::string filename;
 	int size;
+	double splitData;
 	int trainData;
 	int testData;
 	std::vector<std::vector<double>> train;

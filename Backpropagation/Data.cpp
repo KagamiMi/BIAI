@@ -46,7 +46,21 @@ void Data::readData()
 				oneLine.push_back(tmp);
 				file.get(temp);
 			} while((temp !='\n') && (!file.eof()));
-			if (i < trainData)
+			switch (((int)oneLine[0])) {
+			case 1:
+				sugi.push_back(oneLine);
+				break;
+			case 2:
+				hinoki.push_back(oneLine);
+				break;
+			case 3:
+				deciduous.push_back(oneLine);
+				break;
+			case 4:
+				other.push_back(oneLine);
+				break;
+			}
+			/*if (i < trainData)
 			{
 				train.push_back(oneLine);
 			}
@@ -54,7 +68,47 @@ void Data::readData()
 			{
 				test.push_back(oneLine);
 			}
-			i++;
+			i++;*/
+		}
+		//sugi
+		int trainSize = sugi.size() * splitData;
+		for (int i = 0; i < sugi.size(); i++) {
+			if (i < trainSize) {
+				train.push_back(sugi[i]);
+			}
+			else {
+				test.push_back(sugi[i]);
+			}
+		}
+		//hinoki
+		trainSize = hinoki.size() * splitData;
+		for (int i = 0; i < hinoki.size(); i++) {
+			if (i < trainSize) {
+				train.push_back(hinoki[i]);
+			}
+			else {
+				test.push_back(hinoki[i]);
+			}
+		}
+		//deciduous
+		trainSize = deciduous.size() * splitData;
+		for (int i = 0; i < deciduous.size(); i++) {
+			if (i < trainSize) {
+				train.push_back(deciduous[i]);
+			}
+			else {
+				test.push_back(deciduous[i]);
+			}
+		}
+		//other
+		trainSize = other.size() * splitData;
+		for (int i = 0; i < other.size(); i++) {
+			if (i < trainSize) {
+				train.push_back(other[i]);
+			}
+			else {
+				test.push_back(other[i]);
+			}
 		}
 	}
 }
@@ -69,15 +123,16 @@ std::vector<std::vector<double>> &Data::getTestData()
 	return test;
 }
 
-Data::Data(std::string filename, double splitData):
+Data::Data(std::string filename, double _splitData):
 	filename(filename)
 {
 	file.open(filename);
 	size = std::count(std::istreambuf_iterator<char>(file),
 		std::istreambuf_iterator<char>(), '\n');
 	file.close();
-	trainData = size * splitData;
-	testData = size - trainData;
+	splitData = _splitData;
+	//trainData = size * splitData;
+	//testData = size - trainData;
 	readData();
 	normalize();
 }
