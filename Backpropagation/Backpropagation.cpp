@@ -62,6 +62,7 @@ int main(int argc, char* argv[])
 	//neurons.setTrainData(train);
 	//neurons.setTestData(test);
 	neurons.trainNetwork(epochs,interval);
+	neurons.writeNeuralNetworkToFile("weights.txt");
 	return 0;
 }
 

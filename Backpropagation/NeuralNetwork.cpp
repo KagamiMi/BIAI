@@ -1,5 +1,10 @@
-﻿#include "stdafx.h"
+﻿
+#include "stdafx.h"
 #include "NeuralNetwork.h"
+#include <fstream>
+#include <chrono>
+#include <ctime>
+
 
 
 void NeuralNetwork::setTrainData(std::vector<std::vector<double>>& _trainData)
@@ -411,6 +416,60 @@ void NeuralNetwork::trainNetwork(int epochs, int step)
 
 void NeuralNetwork::writeNeuralNetworkToFile(std::string filename)
 {
-
+	std::ofstream file;
+	file.open(filename, std::ifstream::out | std::ifstream::app);
+	if (file) {
+		std::chrono::time_point<std::chrono::system_clock> time = std::chrono::system_clock::now();
+		std::time_t time_value = std::chrono::system_clock::to_time_t(time);
+		file << std::ctime(&time_value) << std::endl;
+		file << "Input to hidden weights: " << std::endl;
+		for (int i = 0; i < hiddenWeights.size(); i++) {
+			file << "Input " << i << ": ";
+			for (int j = 0; j < hiddenWeights[i].size(); j++) {
+				file << hiddenWeights[i][j];
+				if ((j + 1) < hiddenWeights[i].size()) {
+					file << " ";
+				}
+				else {
+					file << std::endl;
+				}
+			}
+		}
+		file << std::endl << "Hidden layer bias: " << std::endl;
+		for (int i = 0; i < hiddenBias.size(); i++) {
+			file << hiddenBias[i];
+			if ((i + 1) < hiddenBias.size()) {
+				file << " ";
+			}
+			else {
+				file << std::endl;
+			}
+		}
+		file << std::endl << "Hidden to output weights: " << std::endl;
+		for (int i = 0; i < outputWeights.size(); i++) {
+			file << "Hidden " << i << ": ";
+			for (int j = 0; j < outputWeights[i].size(); j++) {
+				file << outputWeights[i][j];
+				if ((j + 1) < outputWeights[i].size()) {
+					file << " ";
+				}
+				else {
+					file << std::endl;
+				}
+			}
+		}
+		file << std::endl << "Output layer bias: " << std::endl;
+		for (int i = 0; i < outputBias.size(); i++) {
+			file << outputBias[i];
+			if ((i + 1) < outputBias.size()) {
+				file << " ";
+			}
+			else {
+				file << std::endl;
+			}
+		}
+		file << std::endl;
+		file.close();
+	}
 }
 
