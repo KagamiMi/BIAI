@@ -268,7 +268,7 @@ void NeuralNetwork::trainNetwork(int epochs, int step)
 		indexes[i]=i;
 	}
 
-	for (int i = 0; i < epochs; i++) //dla każdej epoki
+	for (int i = 1; i <= epochs; i++) //dla każdej epoki
 	{
 		//trenuj
 		//przejscie przez cala tablice trainData
@@ -311,7 +311,8 @@ void NeuralNetwork::trainNetwork(int epochs, int step)
 			updateWeights();
 		}
 
-		if ((i!=0) && ((i % step == 0) || (i == epochs))) //liczenie co okreslony krok
+		//if ((i!=0) && ((i % step == 0) || (i == epochs))) //liczenie co okreslony krok
+		if (i%step ==0)
 		{
 			long double errorSum = 0;
 			int right = 0;
@@ -406,5 +407,10 @@ void NeuralNetwork::trainNetwork(int epochs, int step)
 		DurstenfeldShuffle(indexes);
 		//mieszanie indeksow
 	}
+}
+
+void NeuralNetwork::writeNeuralNetworkToFile(std::string filename)
+{
+
 }
 

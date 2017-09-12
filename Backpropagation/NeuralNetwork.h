@@ -45,5 +45,6 @@ public:
 	void updateWeights();
 	void DurstenfeldShuffle(std::vector<int>& table);
 	void trainNetwork(int epochs, int step);
+	void writeNeuralNetworkToFile(std::string filename);
 };
 
