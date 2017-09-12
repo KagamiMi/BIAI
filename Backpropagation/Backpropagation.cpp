@@ -24,13 +24,45 @@ int main(int argc, char* argv[])
 	}
 	string dataPath = argv[1];
 	double splitRatio = atof(argv[2]);
+	if ((splitRatio <= 0) || (splitRatio >= 1)) {
+		std::cout << "Wrong split ratio";
+		return 1;
+	}
 	int inputNeurons = atoi(argv[3]);
+	if (inputNeurons < 1) {
+		std::cout << "Wrong input neurons number";
+		return 1;
+	}
 	int outputNeurons = atoi(argv[4]);
+	if (outputNeurons != 4) {
+		std::cout << "Wrong output neurons number";
+		return 1;
+	}
 	int hiddenNeurons = atoi(argv[5]);
+	if (hiddenNeurons<1) {
+		std::cout << "Wrong hidden neurons number";
+		return 1;
+	}
 	double learningRate = atof(argv[6]);
+	if (learningRate<=0) {
+		std::cout << "Wrong learningRate";
+		return 1;
+	}
 	double momentum = atof(argv[7]);
+	if (momentum<0) {
+		std::cout << "Wrong momentum";
+		return 1;
+	}
 	int epochs = atoi(argv[8]);
+	if (epochs<=0) {
+		std::cout << "Wrong epochs number";
+		return 1;
+	}
 	int interval = atoi(argv[9]);
+	if ((interval <= 0) || (interval>epochs)) {
+		std::cout << "Wrong interval number";
+		return 1;
+	}
 
 	Data data(dataPath,splitRatio);
 	NeuralNetwork neurons(inputNeurons,outputNeurons,hiddenNeurons,learningRate,momentum);
