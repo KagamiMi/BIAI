@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 	// argv[7] - momentum
 	// argv[8] - number of epochs
 	// argv[9] - checking test data interval
-	if (argc != 10) {
+	if (argc != 9) {
 		std::cout << "Wrong number of input parameters";
 		return 1;
 	}
@@ -28,73 +28,39 @@ int main(int argc, char* argv[])
 		std::cout << "Wrong split ratio";
 		return 1;
 	}
-	int inputNeurons = atoi(argv[3]);
-	if (inputNeurons < 1) {
-		std::cout << "Wrong input neurons number";
-		return 1;
-	}
-	int outputNeurons = atoi(argv[4]);
-	if (outputNeurons != 4) {
-		std::cout << "Wrong output neurons number";
-		return 1;
-	}
-	int hiddenNeurons = atoi(argv[5]);
+	int hiddenNeurons = atoi(argv[3]);
 	if (hiddenNeurons<1) {
 		std::cout << "Wrong hidden neurons number";
 		return 1;
 	}
-	double learningRate = atof(argv[6]);
+	double learningRate = atof(argv[4]);
 	if (learningRate<=0) {
 		std::cout << "Wrong learningRate";
 		return 1;
 	}
-	double momentum = atof(argv[7]);
+	double momentum = atof(argv[5]);
 	if (momentum<0) {
 		std::cout << "Wrong momentum";
 		return 1;
 	}
-	int epochs = atoi(argv[8]);
+	int epochs = atoi(argv[6]);
 	if (epochs<=0) {
 		std::cout << "Wrong epochs number";
 		return 1;
 	}
-	int interval = atoi(argv[9]);
+	int interval = atoi(argv[7]);
 	if ((interval <= 0) || (interval>epochs)) {
 		std::cout << "Wrong interval number";
 		return 1;
 	}
-
+	string savePath = argv[8];
 	Data data(dataPath,splitRatio);
-	NeuralNetwork neurons(inputNeurons,outputNeurons,hiddenNeurons,learningRate,momentum);
-	std::vector<std::vector<double>> train;
-	std::vector<std::vector<double>> test;
-	srand(time(NULL));
-	/*for (int i = 0; i < 800; ++i)
-	{
-		std::vector<double> temp;
-		temp.push_back((rand()%4 + 1));
-		for (int j = 0; j < 27; ++j)
-		{
-			temp.push_back((((double)(rand() * 20) / RAND_MAX) - 10));
-		}
-		train.push_back(temp);
-	}
-	for (int i = 0; i < 200; ++i)
-	{
-		std::vector<double> temp;
-		temp.push_back((rand() % 4 + 1));
-		for (int j = 0; j < 27; ++j)
-		{
-			temp.push_back((((double)(rand() * 20) / RAND_MAX) - 10));
-		}
-		test.push_back(temp);
-	}*/
+	NeuralNetwork neurons(27,4,hiddenNeurons,learningRate,momentum);
 	neurons.setTrainData(data.getTrainData());
 	neurons.setTestData(data.getTestData());
-	//neurons.setTrainData(train);
-	//neurons.setTestData(test);
 	neurons.trainNetwork(epochs,interval);
-	neurons.writeNeuralNetworkToFile("weights.txt");
+	neurons.writeNeuralNetworkToFile(savePath);
+	getchar();
 	return 0;
 }
 

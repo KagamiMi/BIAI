@@ -34,16 +34,16 @@ private:
 	std::vector<double> correctOutput;
 	std::vector<double> computedOutput;
 	std::vector<double> hiddenOutput;
-public:
-	NeuralNetwork(int inputNeurons, int outputNeurons, int hiddenNeurons, double learningRate, double momentum);
-	~NeuralNetwork();
 	void computeOutputs(std::vector<double> data);
 	void calculateGradients(int index);
-	void setTrainData(std::vector<std::vector<double>> &trainData);
-	void setTestData(std::vector<std::vector<double>> &testData);
 	void setRandomWeightsAndBiases();
 	void updateWeights();
 	void DurstenfeldShuffle(std::vector<int>& table);
+public:
+	NeuralNetwork(int inputNeurons, int outputNeurons, int hiddenNeurons, double learningRate, double momentum);
+	~NeuralNetwork();
+	void setTrainData(std::vector<std::vector<double>> &trainData);
+	void setTestData(std::vector<std::vector<double>> &testData);
 	void trainNetwork(int epochs, int step);
 	void writeNeuralNetworkToFile(std::string filename);
 };

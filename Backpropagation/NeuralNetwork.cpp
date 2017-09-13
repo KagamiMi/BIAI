@@ -277,7 +277,6 @@ void NeuralNetwork::trainNetwork(int epochs, int step)
 	{
 		//trenuj
 		//przejscie przez cala tablice trainData
-		// TODO jaki size() ? jeden wymiar czy dwa?
 		for (int i = 0; i < trainData.size(); i++)
 		{
 			int index = indexes[i]; //jeden z pomieszanych indeksów
@@ -364,7 +363,7 @@ void NeuralNetwork::trainNetwork(int epochs, int step)
 				if (maxCorrect == maxComputed) { right++; }
 			}
 			long double mse = errorSum / testData.size();
-			double percentage = ((double)right) / testData.size();
+			double percentage = ((double)right) / testData.size() * 100;
 			std::cout <<"Epoch: " << std::setw(10)<< i << " MSE: " << std::setw(10) << mse << " Correct %: "<< std::setw(10)<< percentage << std::endl;
 			/*errorSum = 0;
 			for (int j = 0; j < trainData.size(); j++)
@@ -470,6 +469,9 @@ void NeuralNetwork::writeNeuralNetworkToFile(std::string filename)
 		}
 		file << std::endl;
 		file.close();
+	}
+	else {
+		std::cout << "Saving weights and biases to file failed" << std::endl;
 	}
 }
 

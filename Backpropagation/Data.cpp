@@ -60,15 +60,6 @@ void Data::readData()
 				other.push_back(oneLine);
 				break;
 			}
-			/*if (i < trainData)
-			{
-				train.push_back(oneLine);
-			}
-			else
-			{
-				test.push_back(oneLine);
-			}
-			i++;*/
 		}
 		//sugi
 		int trainSize = sugi.size() * splitData;
@@ -111,6 +102,10 @@ void Data::readData()
 			}
 		}
 	}
+	 else {
+		 std::cout << "Wrong file name" << std::endl;
+		 exit(1);
+	}
 }
 
 std::vector<std::vector<double>> &Data::getTrainData()
@@ -123,18 +118,11 @@ std::vector<std::vector<double>> &Data::getTestData()
 	return test;
 }
 
-Data::Data(std::string filename, double _splitData):
-	filename(filename)
+Data::Data(std::string filename, double splitData):
+	filename(filename), splitData(splitData)
 {
-	file.open(filename);
-	size = std::count(std::istreambuf_iterator<char>(file),
-		std::istreambuf_iterator<char>(), '\n');
-	file.close();
-	splitData = _splitData;
-	//trainData = size * splitData;
-	//testData = size - trainData;
-	readData();
-	normalize();
+		readData();
+		normalize();
 }
 
 void Data::normalize() {
